@@ -54,15 +54,15 @@ stages:
           maxParallel: 1
         steps:
           - script: |
-              echo "Installing - $[ variables['Environment']] - $[ variables['Region']]"
+              echo "Installing - $(Environment) - $(Region)"
             name: Install
 
           - script: |
-              echo "Initialising - $[ variables['Environment']] - $[ variables['Region']]"
+              echo "Initialising - $(Environment) - $(Region)"
             name: Initialise
 
           - script: |
-              echo "Planning - $[ variables['Environment']] - $[ variables['Region']]"
+              echo "Planning - $(Environment) - $(Region)"
             name: Plan
 
   - stage: DeployAustraliaDevelopment
