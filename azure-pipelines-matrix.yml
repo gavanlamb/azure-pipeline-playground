@@ -34,7 +34,7 @@ stages:
     displayName: 'Plan Australia Development'
     jobs:
       - job: Plan
-        displayName: Plan $[ variables['Region']]
+        displayName: Plan - $(Environment) - $(Region)
         pool:
           vmImage: ubuntu-latest
         strategy:
