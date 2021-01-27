@@ -9,7 +9,7 @@ stages:
         steps:
           - script: |
               echo 'Restoring'
-            name: Build
+            name: Restoring
 
           - script: |
               echo 'Building'
