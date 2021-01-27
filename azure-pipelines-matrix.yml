@@ -71,6 +71,7 @@ stages:
     jobs:
       - job: Test
         displayName: Test
+        condition: always()
         steps:
           - script: echo hello
             displayName: Script
