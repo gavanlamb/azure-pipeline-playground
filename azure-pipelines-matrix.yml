@@ -34,21 +34,21 @@ stages:
     displayName: 'Plan Australia Development'
     jobs:
       - job: Plan
-        displayName: Plan - $(Environment) - $(Region)
+        displayName: Plan
         pool:
           vmImage: ubuntu-latest
         strategy:
           matrix:
-            AU_DEV:
+            Australia:
               Environment: development
               Region: ap-southeast-2
-            SA_DEV:
+            South Africa:
               Environment: development
               Region: af-south-1
-            NZ_DEV:
+            New Zealand:
               Environment: development
               Region: ap-southeast-2
-            US_DEV:
+            United States:
               Environment: development
               Region: us-east-1
           maxParallel: 1
