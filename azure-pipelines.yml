@@ -27,31 +27,8 @@ stages:
               echo 'Pass an array of location ids and push to those.'
             name: Push
 
-
-
-  - stage: PlanAustraliaDevelopment
-    dependsOn: BuildTestAndPush
-    displayName: 'Plan Australia Development'
-    jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
   - stage: DeployAustraliaDevelopment
-    dependsOn: PlanAustraliaDevelopment
+    dependsOn: BuildTestAndPush
     displayName: 'Deploy to Australia Development'
     jobs:
       - deployment: Deploy
@@ -75,29 +52,8 @@ stages:
                   - script: echo 'Alert Success'
                     displayName: 'Alert Success'
 
-  - stage: PlanAustraliaUAT
-    dependsOn: DeployAustraliaDevelopment
-    displayName: 'Plan Australia UAT'
-    jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
   - stage: DeployAustraliaUAT
-    dependsOn: PlanAustraliaUAT
+    dependsOn: DeployAustraliaDevelopment
     displayName: 'Deploy Australia UAT'
     jobs:
       - deployment: Deploy
@@ -112,31 +68,8 @@ stages:
                     echo 'Deploying'
                   name: Deploy
 
-
-
-  - stage: PlanSouthAfricaDevelopment
-    dependsOn: BuildTestAndPush
-    displayName: 'Plan South Africa Development'
-    jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
   - stage: DeploySouthAfricaDevelopment
-    dependsOn: PlanSouthAfricaDevelopment
+    dependsOn: BuildTestAndPush
     displayName: 'Deploy to South Africa Development'
     jobs:
       - deployment: Deploy
@@ -160,29 +93,8 @@ stages:
                   - script: echo 'Alert Success'
                     displayName: 'Alert Success'
 
-  - stage: PlanSouthAfricaUAT
-    dependsOn: DeploySouthAfricaDevelopment
-    displayName: 'Plan South Africa UAT'
-    jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
   - stage: DeploySouthAfricaUAT
-    dependsOn: PlanSouthAfricaUAT
+    dependsOn: DeploySouthAfricaDevelopment
     displayName: 'Deploy South Africa UAT'
     jobs:
       - deployment: Deploy
@@ -197,31 +109,8 @@ stages:
                     echo 'Deploying'
                   name: Deploy
 
-
-
-  - stage: PlanAmericaDevelopment
-    dependsOn: BuildTestAndPush
-    displayName: 'Plan America Development'
-    jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
   - stage: DeployAmericaDevelopment
-    dependsOn: PlanAmericaDevelopment
+    dependsOn: BuildTestAndPush
     displayName: 'Deploy to America Development'
     jobs:
       - deployment: Deploy
@@ -245,29 +134,8 @@ stages:
                   - script: echo 'Alert Success'
                     displayName: 'Alert Success'
 
-  - stage: PlanAmericaUAT
-    dependsOn: DeployAmericaDevelopment
-    displayName: 'Plan America UAT'
-    jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
   - stage: DeployAmericaUAT
-    dependsOn: PlanAmericaUAT
+    dependsOn: DeployAmericaDevelopment
     displayName: 'Deploy America UAT'
     jobs:
       - deployment: Deploy
@@ -282,31 +150,8 @@ stages:
                     echo 'Deploying'
                   name: Deploy
 
-
-
-  - stage: PlanNewZealandDevelopment
-    dependsOn: BuildTestAndPush
-    displayName: 'Plan New Zealand Development'
-    jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
   - stage: DeployNewZealandDevelopment
-    dependsOn: PlanNewZealandDevelopment
+    dependsOn: BuildTestAndPush
     displayName: 'Deploy to New Zealand Development'
     jobs:
       - deployment: Deploy
@@ -330,29 +175,8 @@ stages:
                   - script: echo 'Alert Success'
                     displayName: 'Alert Success'
 
-  - stage: PlanNewZealandUAT
-    dependsOn: DeployNewZealandDevelopment
-    displayName: 'Plan New Zealand UAT'
-    jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
   - stage: DeployNewZealandUAT
-    dependsOn: PlanNewZealandUAT
+    dependsOn: DeployNewZealandDevelopment
     displayName: 'Deploy New Zealand UAT'
     jobs:
       - deployment: Deploy
