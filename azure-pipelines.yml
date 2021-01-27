@@ -30,6 +30,15 @@ stages:
     dependsOn: BuildTestAndPush
     displayName: 'Deploy to Sydney Development'
     jobs:
+      - job: Plan
+        displayName: 'Plan'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Planning'
+            name: Planning
+
       - deployment: Deploy
         pool:
           vmImage: ubuntu-latest
