@@ -30,30 +30,26 @@ stages:
     dependsOn: BuildTestAndPush
     displayName: 'Deploy to Sydney Development'
     jobs:
-      - job: Plan
-        displayName: 'Plan'
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - script: |
-              echo 'Installing'
-            name: Install
-
-          - script: |
-              echo 'Initialising'
-            name: Initialise
-
-          - script: |
-              echo 'Planning'
-            name: Plan
-
       - deployment: Deploy
         pool:
           vmImage: ubuntu-latest
         environment: Development
-        dependsOn: Plan
         strategy:
           runOnce:
+            preDeploy:
+              steps:
+                - script: |
+                    echo 'Installing'
+                  name: Install
+
+                - script: |
+                    echo 'Initialising'
+                  name: Initialise
+
+                - script: |
+                    echo 'Planning'
+                  name: Plan
+
             deploy:
               steps:
                 - script: |
@@ -67,6 +63,15 @@ stages:
                 - script: |
                     echo 'Applying'
                   name: Apply
+            on:
+              failure:
+                steps:
+                  - script: echo 'Alert Failure'
+                    displayName: 'Alert Failure'
+              success:
+                steps:
+                  - script: echo 'Alert Success'
+                    displayName: 'Alert Success'
 
   - stage: DeploySydneyUAT
     displayName: 'Deploy to Sydney UAT'
