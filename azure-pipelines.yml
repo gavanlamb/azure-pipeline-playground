@@ -1,0 +1,58 @@
+stages:
+  - stage: BuildTestAndPush
+    displayName: 'Build, Test & Push'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Restoring'
+            name: Build
+
+          - script: |
+              echo 'Building'
+            name: Build
+
+          - script: |
+              echo 'Testing'
+            name: Testing
+
+          - script: |
+              echo 'Pushing to South Africa'
+              echo 'Pushing Sydney'
+              echo 'Pushing America'
+              echo 'Pass an array of location ids and push to those.'
+            name: Pushing
+
+  - stage: DeploySydneyDevelopment
+    dependsOn: BuildTestAndPush
+    displayName: 'Deploy to Sydney Development'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: Development
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploying'
+                  name: Deploying
+
+  - stage: DeploySydneyUAT
+    displayName: 'Deploy to Sydney UAT'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: UAT
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploying'
+                  name: Deploying
