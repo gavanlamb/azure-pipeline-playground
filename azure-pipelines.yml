@@ -193,3 +193,175 @@ stages:
                 - script: |
                     echo 'Deploying'
                   name: Deploy
+
+
+
+
+  - stage: PlanAmericaDevelopment
+    dependsOn: BuildTestAndPush
+    displayName: 'Plan America Development'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
+              echo 'Planning'
+            name: Plan
+
+  - stage: DeployAmericaDevelopment
+    dependsOn: PlanAmericaDevelopment
+    displayName: 'Deploy to America Development'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: Development
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploy'
+                  name: Deploy
+            on:
+              failure:
+                steps:
+                  - script: echo 'Alert Failure'
+                    displayName: 'Alert Failure'
+              success:
+                steps:
+                  - script: echo 'Alert Success'
+                    displayName: 'Alert Success'
+
+  - stage: PlanAmericaUAT
+    dependsOn: DeployAmericaDevelopment
+    displayName: 'Plan America UAT'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
+              echo 'Planning'
+            name: Plan
+
+  - stage: DeployAmericaUAT
+    dependsOn: PlanAmericaUAT
+    displayName: 'Deploy America UAT'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: UAT
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploying'
+                  name: Deploy
+
+
+
+
+  - stage: PlanNewZealandDevelopment
+    dependsOn: BuildTestAndPush
+    displayName: 'Plan New Zealand Development'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
+              echo 'Planning'
+            name: Plan
+
+  - stage: DeployNewZealandDevelopment
+    dependsOn: PlanNewZealandDevelopment
+    displayName: 'Deploy to New Zealand Development'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: Development
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploy'
+                  name: Deploy
+            on:
+              failure:
+                steps:
+                  - script: echo 'Alert Failure'
+                    displayName: 'Alert Failure'
+              success:
+                steps:
+                  - script: echo 'Alert Success'
+                    displayName: 'Alert Success'
+
+  - stage: PlanAmericaUAT
+    dependsOn: DeployNewZealandDevelopment
+    displayName: 'Plan New Zealand UAT'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
+              echo 'Planning'
+            name: Plan
+
+  - stage: DeployNewZealandUAT
+    dependsOn: PlanNewZealandUAT
+    displayName: 'Deploy New Zealand UAT'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: UAT
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploying'
+                  name: Deploy
