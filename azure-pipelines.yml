@@ -27,12 +27,14 @@ stages:
               echo 'Pass an array of location ids and push to those.'
             name: Push
 
+
+
   - stage: PlanAustraliaDevelopment
     dependsOn: BuildTestAndPush
     displayName: 'Plan Australia Development'
     jobs:
-      - job: Build
-        displayName: 'Build'
+      - job: Plan
+        displayName: 'Plan'
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -77,8 +79,8 @@ stages:
     dependsOn: DeployAustraliaDevelopment
     displayName: 'Plan Australia UAT'
     jobs:
-      - job: Build
-        displayName: 'Build'
+      - job: Plan
+        displayName: 'Plan'
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -116,8 +118,8 @@ stages:
     dependsOn: BuildTestAndPush
     displayName: 'Plan South Africa Development'
     jobs:
-      - job: Build
-        displayName: 'Build'
+      - job: Plan
+        displayName: 'Plan'
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -162,8 +164,8 @@ stages:
     dependsOn: DeploySouthAfricaDevelopment
     displayName: 'Plan South Africa UAT'
     jobs:
-      - job: Build
-        displayName: 'Build'
+      - job: Plan
+        displayName: 'Plan'
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -197,13 +199,12 @@ stages:
 
 
 
-
   - stage: PlanAmericaDevelopment
     dependsOn: BuildTestAndPush
     displayName: 'Plan America Development'
     jobs:
-      - job: Build
-        displayName: 'Build'
+      - job: Plan
+        displayName: 'Plan'
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -248,8 +249,8 @@ stages:
     dependsOn: DeployAmericaDevelopment
     displayName: 'Plan America UAT'
     jobs:
-      - job: Build
-        displayName: 'Build'
+      - job: Plan
+        displayName: 'Plan'
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -283,13 +284,12 @@ stages:
 
 
 
-
   - stage: PlanNewZealandDevelopment
     dependsOn: BuildTestAndPush
     displayName: 'Plan New Zealand Development'
     jobs:
-      - job: Build
-        displayName: 'Build'
+      - job: Plan
+        displayName: 'Plan'
         pool:
           vmImage: ubuntu-latest
         steps:
@@ -334,8 +334,8 @@ stages:
     dependsOn: DeployNewZealandDevelopment
     displayName: 'Plan New Zealand UAT'
     jobs:
-      - job: Build
-        displayName: 'Build'
+      - job: Plan
+        displayName: 'Plan'
         pool:
           vmImage: ubuntu-latest
         steps:
