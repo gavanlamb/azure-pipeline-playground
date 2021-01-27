@@ -26,8 +26,29 @@ stages:
               echo 'Pass an array of location ids and push to those.'
             name: Push
 
-  - stage: DeploySydneyDevelopment
+  - stage: PlanSydneyDevelopment
     dependsOn: BuildTestAndPush
+    displayName: 'Build, Test & Push'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
+              echo 'Planning'
+            name: Plan
+
+  - stage: DeploySydneyDevelopment
+    dependsOn: PlanSydneyDevelopment
     displayName: 'Deploy to Sydney Development'
     jobs:
       - deployment: Deploy
@@ -36,33 +57,11 @@ stages:
         environment: Development
         strategy:
           runOnce:
-            preDeploy:
-              steps:
-                - script: |
-                    echo 'Installing'
-                  name: Install
-
-                - script: |
-                    echo 'Initialising'
-                  name: Initialise
-
-                - script: |
-                    echo 'Planning'
-                  name: Plan
-
             deploy:
               steps:
                 - script: |
-                    echo 'Installing'
-                  name: Install
-
-                - script: |
-                    echo 'Initialising'
-                  name: Initialise
-
-                - script: |
-                    echo 'Applying'
-                  name: Apply
+                    echo 'Deploy'
+                  name: Deploy
             on:
               failure:
                 steps:
@@ -73,7 +72,29 @@ stages:
                   - script: echo 'Alert Success'
                     displayName: 'Alert Success'
 
+  - stage: PlanSydneyUAT
+    dependsOn: DeploySydneyDevelopment
+    displayName: 'Build, Test & Push'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
+              echo 'Planning'
+            name: Plan
+
   - stage: DeploySydneyUAT
+    dependsOn: PlanSydneyUAT
     displayName: 'Deploy to Sydney UAT'
     jobs:
       - deployment: Deploy
