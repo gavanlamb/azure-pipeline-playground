@@ -9,7 +9,7 @@ stages:
         steps:
           - script: |
               echo 'Restoring'
-            name: Restoring
+            name: Restore
 
           - script: |
               echo 'Building'
@@ -17,14 +17,14 @@ stages:
 
           - script: |
               echo 'Testing'
-            name: Testing
+            name: Test
 
           - script: |
               echo 'Pushing to South Africa'
               echo 'Pushing Sydney'
               echo 'Pushing America'
               echo 'Pass an array of location ids and push to those.'
-            name: Pushing
+            name: Push
 
   - stage: DeploySydneyDevelopment
     dependsOn: BuildTestAndPush
@@ -36,20 +36,37 @@ stages:
           vmImage: ubuntu-latest
         steps:
           - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
               echo 'Planning'
-            name: Planning
+            name: Plan
 
       - deployment: Deploy
         pool:
           vmImage: ubuntu-latest
         environment: Development
+        dependsOn: Plan
         strategy:
           runOnce:
             deploy:
               steps:
                 - script: |
-                    echo 'Deploying'
-                  name: Deploying
+                    echo 'Installing'
+                  name: Install
+
+                - script: |
+                    echo 'Initialising'
+                  name: Initialise
+
+                - script: |
+                    echo 'Applying'
+                  name: Apply
 
   - stage: DeploySydneyUAT
     displayName: 'Deploy to Sydney UAT'
@@ -64,4 +81,4 @@ stages:
               steps:
                 - script: |
                     echo 'Deploying'
-                  name: Deploying
+                  name: Deploy
