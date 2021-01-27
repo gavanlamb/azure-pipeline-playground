@@ -21,8 +21,9 @@ stages:
 
           - script: |
               echo 'Pushing to South Africa'
-              echo 'Pushing Australi'
+              echo 'Pushing Australia'
               echo 'Pushing America'
+              echo 'Pushing New Zealand'
               echo 'Pass an array of location ids and push to those.'
             name: Push
 
@@ -329,7 +330,7 @@ stages:
                   - script: echo 'Alert Success'
                     displayName: 'Alert Success'
 
-  - stage: PlanAmericaUAT
+  - stage: PlanNewZealandUAT
     dependsOn: DeployNewZealandDevelopment
     displayName: 'Plan New Zealand UAT'
     jobs:
