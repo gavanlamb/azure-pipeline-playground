@@ -21,14 +21,14 @@ stages:
 
           - script: |
               echo 'Pushing to South Africa'
-              echo 'Pushing Sydney'
+              echo 'Pushing Australi'
               echo 'Pushing America'
               echo 'Pass an array of location ids and push to those.'
             name: Push
 
-  - stage: PlanSydneyDevelopment
+  - stage: PlanAustraliaDevelopment
     dependsOn: BuildTestAndPush
-    displayName: 'Plan Sydney Development'
+    displayName: 'Plan Australia Development'
     jobs:
       - job: Build
         displayName: 'Build'
@@ -47,9 +47,9 @@ stages:
               echo 'Planning'
             name: Plan
 
-  - stage: DeploySydneyDevelopment
-    dependsOn: PlanSydneyDevelopment
-    displayName: 'Deploy to Sydney Development'
+  - stage: DeployAustraliaDevelopment
+    dependsOn: PlanAustraliaDevelopment
+    displayName: 'Deploy to Australia Development'
     jobs:
       - deployment: Deploy
         pool:
@@ -72,9 +72,9 @@ stages:
                   - script: echo 'Alert Success'
                     displayName: 'Alert Success'
 
-  - stage: PlanSydneyUAT
-    dependsOn: DeploySydneyDevelopment
-    displayName: 'Plan Sydney UAT'
+  - stage: PlanAustraliaUAT
+    dependsOn: DeployAustraliaDevelopment
+    displayName: 'Plan Australia UAT'
     jobs:
       - job: Build
         displayName: 'Build'
@@ -93,9 +93,94 @@ stages:
               echo 'Planning'
             name: Plan
 
-  - stage: DeploySydneyUAT
-    dependsOn: PlanSydneyUAT
-    displayName: 'Deploy Sydney UAT'
+  - stage: DeployAustraliaUAT
+    dependsOn: PlanAustraliaUAT
+    displayName: 'Deploy Australia UAT'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: UAT
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploying'
+                  name: Deploy
+
+
+
+  - stage: PlanSouthAfricaDevelopment
+    dependsOn: BuildTestAndPush
+    displayName: 'Plan South Africa Development'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
+              echo 'Planning'
+            name: Plan
+
+  - stage: DeploySouthAfricaDevelopment
+    dependsOn: PlanSouthAfricaDevelopment
+    displayName: 'Deploy to South Africa Development'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: Development
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploy'
+                  name: Deploy
+            on:
+              failure:
+                steps:
+                  - script: echo 'Alert Failure'
+                    displayName: 'Alert Failure'
+              success:
+                steps:
+                  - script: echo 'Alert Success'
+                    displayName: 'Alert Success'
+
+  - stage: PlanSouthAfricaUAT
+    dependsOn: DeploySouthAfricaDevelopment
+    displayName: 'Plan South Africa UAT'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Installing'
+            name: Install
+
+          - script: |
+              echo 'Initialising'
+            name: Initialise
+
+          - script: |
+              echo 'Planning'
+            name: Plan
+
+  - stage: DeploySouthAfricaUAT
+    dependsOn: PlanSouthAfricaUAT
+    displayName: 'Deploy South Africa UAT'
     jobs:
       - deployment: Deploy
         pool:
