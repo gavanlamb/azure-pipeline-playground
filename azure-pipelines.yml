@@ -28,7 +28,7 @@ stages:
 
   - stage: PlanSydneyDevelopment
     dependsOn: BuildTestAndPush
-    displayName: 'Build, Test & Push'
+    displayName: 'Plan Sydney Development'
     jobs:
       - job: Build
         displayName: 'Build'
@@ -74,7 +74,7 @@ stages:
 
   - stage: PlanSydneyUAT
     dependsOn: DeploySydneyDevelopment
-    displayName: 'Build, Test & Push'
+    displayName: 'Plan Sydney UAT'
     jobs:
       - job: Build
         displayName: 'Build'
@@ -95,7 +95,7 @@ stages:
 
   - stage: DeploySydneyUAT
     dependsOn: PlanSydneyUAT
-    displayName: 'Deploy to Sydney UAT'
+    displayName: 'Deploy Sydney UAT'
     jobs:
       - deployment: Deploy
         pool:
