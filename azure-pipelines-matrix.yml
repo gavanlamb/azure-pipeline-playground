@@ -69,7 +69,13 @@ stages:
     dependsOn: PlanAustraliaDevelopment
     displayName: 'Deploy to Australia Development'
     jobs:
+      - job: Test
+        displayName: Test
+        steps:
+          - script: echo hello
+            displayName: Script
       - deployment: Deploy
+        dependsOn: Test
         pool:
           vmImage: ubuntu-latest
         environment: Development
