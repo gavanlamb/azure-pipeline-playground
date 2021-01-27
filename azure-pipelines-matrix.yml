@@ -1,0 +1,91 @@
+stages:
+  - stage: BuildTestAndPush
+    displayName: 'Build, Test & Push'
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: |
+              echo 'Restoring'
+            name: Restore
+
+          - script: |
+              echo 'Building'
+            name: Build
+
+          - script: |
+              echo 'Testing'
+            name: Test
+
+          - script: |
+              echo 'Pushing to South Africa'
+              echo 'Pushing Australia'
+              echo 'Pushing America'
+              echo 'Pushing New Zealand'
+              echo 'Pass an array of location ids and push to those.'
+            name: Push
+
+
+
+  - stage: PlanAustraliaDevelopment
+    dependsOn: BuildTestAndPush
+    displayName: 'Plan Australia Development'
+    jobs:
+      - job: Plan
+        displayName: Plan $[ variables['Region']]
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          matrix:
+            AU_DEV:
+              Environment: development
+              Region: ap-southeast-2
+            SA_DEV:
+              Environment: development
+              Region: af-south-1
+            NZ_DEV:
+              Environment: development
+              Region: ap-southeast-2
+            US_DEV:
+              Environment: development
+              Region: us-east-1
+          maxParallel: 1
+        steps:
+          - script: |
+              echo "Installing - $[ variables['Environment']] - $[ variables['Region']]"
+            name: Install
+
+          - script: |
+              echo "Initialising - $[ variables['Environment']] - $[ variables['Region']]"
+            name: Initialise
+
+          - script: |
+              echo "Planning - $[ variables['Environment']] - $[ variables['Region']]"
+            name: Plan
+
+  - stage: DeployAustraliaDevelopment
+    dependsOn: PlanAustraliaDevelopment
+    displayName: 'Deploy to Australia Development'
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: Development
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    echo 'Deploy'
+                  name: Deploy
+            on:
+              failure:
+                steps:
+                  - script: echo 'Alert Failure'
+                    displayName: 'Alert Failure'
+              success:
+                steps:
+                  - script: echo 'Alert Success'
+                    displayName: 'Alert Success'
