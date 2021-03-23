@@ -45,15 +45,6 @@ stages:
                 - script: |
                     echo 'Deploy'
                   name: Deploy
-            on:
-              failure:
-                steps:
-                  - script: echo 'Alert Failure'
-                    displayName: 'Alert Failure'
-              success:
-                steps:
-                  - script: echo 'Alert Success'
-                    displayName: 'Alert Success'
 
   - stage: DeployAustraliaUAT
     dependsOn: DeployAustraliaDevelopment
@@ -87,104 +78,11 @@ stages:
                 - script: |
                     echo 'Deploy'
                   name: Deploy
-            on:
-              failure:
-                steps:
-                  - script: echo 'Alert Failure'
-                    displayName: 'Alert Failure'
-              success:
-                steps:
-                  - script: echo 'Alert Success'
-                    displayName: 'Alert Success'
 
   - stage: DeploySouthAfricaUAT
     dependsOn: DeploySouthAfricaDevelopment
     condition: and(succeeded(), eq(variables.isMain, true))
     displayName: 'Deploy South Africa UAT'
-    jobs:
-      - deployment: Deploy
-        pool:
-          vmImage: ubuntu-latest
-        environment: UAT
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - script: |
-                    echo 'Deploying'
-                  name: Deploy
-
-  - stage: DeployAmericaDevelopment
-    dependsOn: BuildTestAndPush
-    displayName: 'Deploy to America Development'
-    jobs:
-      - deployment: Deploy
-        pool:
-          vmImage: ubuntu-latest
-        environment: Development
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - script: |
-                    echo 'Deploy'
-                  name: Deploy
-            on:
-              failure:
-                steps:
-                  - script: echo 'Alert Failure'
-                    displayName: 'Alert Failure'
-              success:
-                steps:
-                  - script: echo 'Alert Success'
-                    displayName: 'Alert Success'
-
-  - stage: DeployAmericaUAT
-    dependsOn: DeployAmericaDevelopment
-    condition: and(succeeded(), eq(variables.isMain, true))
-    displayName: 'Deploy America UAT'
-    jobs:
-      - deployment: Deploy
-        pool:
-          vmImage: ubuntu-latest
-        environment: UAT
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - script: |
-                    echo 'Deploying'
-                  name: Deploy
-
-  - stage: DeployNewZealandDevelopment
-    dependsOn: BuildTestAndPush
-    displayName: 'Deploy to New Zealand Development'
-    jobs:
-      - deployment: Deploy
-        pool:
-          vmImage: ubuntu-latest
-        environment: Development
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - script: |
-                    echo 'Deploy'
-                  name: Deploy
-            on:
-              failure:
-                steps:
-                  - script: echo 'Alert Failure'
-                    displayName: 'Alert Failure'
-              success:
-                steps:
-                  - script: echo 'Alert Success'
-                    displayName: 'Alert Success'
-
-  - stage: DeployNewZealandUAT
-    dependsOn: DeployNewZealandDevelopment
-    condition: and(succeeded(), eq(variables.isMain, true))
-    displayName: 'Deploy New Zealand UAT'
     jobs:
       - deployment: Deploy
         pool:
