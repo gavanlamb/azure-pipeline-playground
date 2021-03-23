@@ -1,3 +1,6 @@
+variables:
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
 stages:
   - stage: BuildTestAndPush
     displayName: 'Build, Test & Push'
@@ -55,6 +58,7 @@ stages:
   - stage: DeployAustraliaUAT
     dependsOn: DeployAustraliaDevelopment
     displayName: 'Deploy Australia UAT'
+    condition: and(succeeded(), eq(variables.isMain, true))
     jobs:
       - deployment: Deploy
         pool:
@@ -95,6 +99,7 @@ stages:
 
   - stage: DeploySouthAfricaUAT
     dependsOn: DeploySouthAfricaDevelopment
+    condition: and(succeeded(), eq(variables.isMain, true))
     displayName: 'Deploy South Africa UAT'
     jobs:
       - deployment: Deploy
@@ -136,6 +141,7 @@ stages:
 
   - stage: DeployAmericaUAT
     dependsOn: DeployAmericaDevelopment
+    condition: and(succeeded(), eq(variables.isMain, true))
     displayName: 'Deploy America UAT'
     jobs:
       - deployment: Deploy
@@ -177,6 +183,7 @@ stages:
 
   - stage: DeployNewZealandUAT
     dependsOn: DeployNewZealandDevelopment
+    condition: and(succeeded(), eq(variables.isMain, true))
     displayName: 'Deploy New Zealand UAT'
     jobs:
       - deployment: Deploy
