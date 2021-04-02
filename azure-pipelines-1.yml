@@ -17,6 +17,7 @@ steps:
     backendServiceAWS: 'AWS GL'
     backendAWSBucketName: 'terraform-state-fkhj'
     backendAWSKey: 'production'
+    workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
 - task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
@@ -24,3 +25,4 @@ steps:
     environmentServiceNameAWS: 'AWS GL'
     workspaceName: 'pwa'
     workspaceCreateIfNotExists: true
+    workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
