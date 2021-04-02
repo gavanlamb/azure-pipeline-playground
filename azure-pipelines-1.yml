@@ -10,14 +10,14 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: GavanLamb.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV1@0
+- task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
     command: 'init'
     backendServiceAWS: 'AWS GL'
     backendAWSBucketName: 'terraform-state-fkhj'
     backendAWSKey: 'production'
-- task: GavanLamb.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV1@0
+- task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
     command: 'workspace'
