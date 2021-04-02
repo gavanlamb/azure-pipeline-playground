@@ -10,6 +10,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '0.14.9'
 - task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
