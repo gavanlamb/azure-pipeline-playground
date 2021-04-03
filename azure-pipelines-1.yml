@@ -10,6 +10,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: CmdLine@2
+  inputs:
+    script: 'ls -al /home/vsts/work/_tasks/'
 - task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
