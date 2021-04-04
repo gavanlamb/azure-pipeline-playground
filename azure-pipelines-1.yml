@@ -23,6 +23,6 @@ steps:
     provider: 'aws'
     command: 'workspace'
     environmentServiceNameAWS: 'AWS GL'
-    workspaceName: 'pwa'
+    workspaceName: 'pwa0'
     workspaceCreateIfNotExists: true
     workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
