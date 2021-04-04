@@ -10,12 +10,6 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: CmdLine@2
-  inputs:
-    script: 'ls -al /home/vsts/work/_tasks/TerraformTaskV1_fe504acc-6115-40cb-69ff-191386b5e7bf/0.0.145/'
-- task: CmdLine@2
-  inputs:
-    script: 'ls -al /home/vsts/work/_tasks/TerraformTaskV1_fe504acc-6115-40cb-69ff-191386b5e7bf/0.0.145/node_modules'
 - task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
