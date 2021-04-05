@@ -3,24 +3,58 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- main
+parameters:
+- name: awsServiceConnectionName
+  type: string
+- name: awsBucketName
+  type: string
 
-pool:
-  vmImage: ubuntu-latest
+- name: initAdditionalCommandOptions
+  type: string
+
+- name: planFile
+  type: string
+- name: planAdditionalCommandOptions
+  type: string
+
+- name: terraformVersion
+  type: string
+- name: workingDirectory
+  type: string
+
+- name: workspaceName
+  type: string
+
 
 steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: ${{ parameters.terraformVersion }}
+
 - task: TerraformTaskV1@0
+  displayName: Terraform Init
   inputs:
     provider: 'aws'
     command: 'init'
-    backendServiceAWS: 'AWS GL'
-    backendAWSBucketName: 'terraform-state-fkhj'
-    backendAWSKey: 'pwa/ap-southeast-2/terraform.tfstate'
-    workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
+    commandOptions: '-input=false -lock=true ${{ parameters.initAdditionalCommandOptions }}'
+    backendServiceAWS: ${{ parameters.awsServiceConnectionName }}
+    backendAWSBucketName: ${{ parameters.awsBucketName }}
+    backendAWSKey: terraform.tfstate
+    workingDirectory: ${{ parameters.workingDirectory }}
+
+- script: |
+    lowerWorkspace='${{ lower(parameters.workspaceName) }}'
+    lowerWorkspace=${lowerWorkspace,,}
+    terraform workspace new $lowerWorkspace || terraform workspace select $lowerWorkspace
+    terraform workspace show
+  displayName: Terraform Select Workspace
+  workingDirectory: ${{ parameters.workingDirectory }}
+
 - task: TerraformTaskV1@0
+  displayName: Terraform Plan
   inputs:
     provider: 'aws'
-    command: 'workspace'
-    environmentServiceNameAWS: 'AWS GL'
-    workspaceName: 'pwa-ap-southeast-2'
+    command: 'plan'
+    commandOptions: '-out=${{ parameters.planFile }} ${{ parameters.planAdditionalCommandOptions }}'
+    environmentServiceNameAWS: ${{ parameters.awsServiceConnectionName }}
+    workingDirectory: ${{ parameters.workingDirectory }}
