@@ -5,24 +5,33 @@
 
 parameters:
 - name: awsServiceConnectionName
+  displayName: Service connection name
   type: string
 - name: awsBucketName
+  displayName: Bucket Name
   type: string
 
 - name: initAdditionalCommandOptions
+  displayName: Additional command options for init step
   type: string
 
 - name: planFile
+  displayName: Name of the plan file
   type: string
 - name: planAdditionalCommandOptions
+  displayName: Additional command options for plan step
   type: string
 
 - name: terraformVersion
+  displayName: Terraform version
   type: string
+  default: '0.14.9'
 - name: workingDirectory
+  displayName: Working directory
   type: string
 
 - name: workspaceName
+  displayName: Workspace name
   type: string
 
 
