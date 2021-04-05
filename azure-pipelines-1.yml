@@ -16,7 +16,7 @@ steps:
     command: 'init'
     backendServiceAWS: 'AWS GL'
     backendAWSBucketName: 'terraform-state-fkhj'
-    backendAWSKey: 'terraform.tfstate'
+    backendAWSKey: 'pwa/ap-southeast-2/terraform.tfstate'
     workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
 - task: TerraformTaskV1@0
   inputs:
