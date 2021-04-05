@@ -13,12 +13,6 @@ steps:
 - task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
-    command: 'workspace'
-    environmentServiceNameAWS: 'AWS GL'
-
-- task: TerraformTaskV1@0
-  inputs:
-    provider: 'aws'
     command: 'init'
     backendServiceAWS: 'AWS GL'
     backendAWSBucketName: 'terraform-state-fkhj'
