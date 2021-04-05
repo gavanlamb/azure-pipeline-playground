@@ -10,12 +10,10 @@ parameters:
 - name: awsBucketName
   displayName: Bucket Name
   type: string
-
 - name: initAdditionalCommandOptions
   displayName: Additional command options for init step
   type: string
   default: " "
-
 - name: planFile
   displayName: Name of the plan file
   type: string
@@ -23,7 +21,6 @@ parameters:
   displayName: Additional command options for plan step
   type: string
   default: " "
-
 - name: terraformVersion
   displayName: Terraform version
   type: string
@@ -31,7 +28,6 @@ parameters:
 - name: workingDirectory
   displayName: Working directory
   type: string
-
 - name: workspaceName
   displayName: Workspace name
   type: string
@@ -69,3 +65,9 @@ steps:
     commandOptions: '-out=${{ parameters.planFile }} ${{ parameters.planAdditionalCommandOptions }}'
     environmentServiceNameAWS: ${{ parameters.awsServiceConnectionName }}
     workingDirectory: ${{ parameters.workingDirectory }}
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '${{ parameters.workingDirectory }}/${{ parameters.planFile }}'
+    ArtifactName: '${{ parameters.planFile }}'
+    publishLocation: 'Container'
