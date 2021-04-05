@@ -23,6 +23,6 @@ steps:
     provider: 'aws'
     command: 'workspace'
     environmentServiceNameAWS: 'AWS GL'
-    workspaceName: 'pwa-production-ap-southeas-2'
+    workspaceName: 'pwa-production-ap-southeast-2'
     workspaceCreateIfNotExists: true
     workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
