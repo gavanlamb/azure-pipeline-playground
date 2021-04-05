@@ -23,7 +23,7 @@ steps:
     provider: 'aws'
     command: 'workspace'
     environmentServiceNameAWS: 'AWS GL'
-    workspaceName: 'pwa-s$%#^'
+    workspaceName: 'pwa-production-ap-southeast-200'
     workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
 - task: TerraformTaskV1@0
   inputs:
