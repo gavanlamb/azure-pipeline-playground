@@ -16,7 +16,7 @@ steps:
     command: 'init'
     backendServiceAWS: 'AWS GL'
     backendAWSBucketName: 'terraform-state-fkhj'
-    backendAWSKey: 'pwa-production'
+    backendAWSKey: 'pwa-staging'
     workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
 
 - task: TerraformTaskV1@0
