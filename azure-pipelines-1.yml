@@ -35,9 +35,9 @@ parameters:
 
 steps:
 - task: TerraformInstaller@0
+  displayName: Install Terraform version:${{ parameters.terraformVersion }}
   inputs:
     terraformVersion: ${{ parameters.terraformVersion }}
-
 - task: TerraformTaskV1@0
   displayName: Terraform Init
   inputs:
@@ -48,7 +48,6 @@ steps:
     backendAWSBucketName: ${{ parameters.awsBucketName }}
     backendAWSKey: terraform.tfstate
     workingDirectory: ${{ parameters.workingDirectory }}
-
 - script: |
     lowerWorkspace='${{ lower(parameters.workspaceName) }}'
     lowerWorkspace=${lowerWorkspace,,}
@@ -56,7 +55,6 @@ steps:
     terraform workspace show
   displayName: Terraform Select Workspace
   workingDirectory: ${{ parameters.workingDirectory }}
-
 - task: TerraformTaskV1@0
   displayName: Terraform Plan
   inputs:
@@ -65,8 +63,8 @@ steps:
     commandOptions: '-out=${{ parameters.planFile }} ${{ parameters.planAdditionalCommandOptions }}'
     environmentServiceNameAWS: ${{ parameters.awsServiceConnectionName }}
     workingDirectory: ${{ parameters.workingDirectory }}
-
 - task: PublishBuildArtifacts@1
+  displayName: Publish ${{ parameters.planFile }}
   inputs:
     PathtoPublish: '${{ parameters.workingDirectory }}/${{ parameters.planFile }}'
     ArtifactName: '${{ parameters.planFile }}'
