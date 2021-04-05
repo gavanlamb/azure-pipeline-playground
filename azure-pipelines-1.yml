@@ -23,5 +23,5 @@ steps:
     provider: 'aws'
     command: 'workspace'
     environmentServiceNameAWS: 'AWS GL'
-    workspaceName: 'pwa-klui'
+    workspaceName: 'pwa-sdfsdfklui'
     workingDirectory: '$(Build.SourcesDirectory)/infrastructure'
