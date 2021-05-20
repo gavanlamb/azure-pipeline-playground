@@ -1,0 +1,33 @@
+variables:
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
+stages:
+  - stage: Test0
+    dependsOn: []
+    jobs:
+      - job: Test00
+        steps:
+          - script: echo "Test00"
+      - job: Test01
+        steps:
+          - script: echo "Test01"
+  
+  - stage: Test1
+    dependsOn: []
+    jobs:
+      - job: Test10
+        steps:
+          - script: echo "Test10"
+      - job: Test11
+        steps:
+          - script: echo "Test11"
+  
+  - stage: Test2
+    dependsOn: []
+    jobs:
+      - job: Test20
+        steps:
+          - script: echo "Test20"
+      - job: Test21
+        steps:
+          - script: echo "Test21"
