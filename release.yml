@@ -1,0 +1,20 @@
+﻿resources:
+  pipelines:
+    - pipeline: gavanlamb.azure-pipeline-playground
+      source: gavanlamb.azure-pipeline-playground.ci
+      project: Expensely
+      trigger: true
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - job: setup
+        displayName: Setup
+        steps:
+          - checkout: none
+          - script: echo "Hello"
+            displayName: Test
