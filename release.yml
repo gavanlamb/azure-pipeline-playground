@@ -1,8 +1,7 @@
 ﻿resources:
   pipelines:
-    - pipeline: gavanlamb.azure-pipeline-playground
-      source: gavanlamb.azure-pipeline-playground.ci
-      project: Expensely
+    - pipeline: gavanlamb-azure-pipeline-playground
+      source: gavanlamb-azure-pipeline-playground
       trigger: true
 
 pool:
@@ -16,5 +15,16 @@ stages:
         displayName: Setup
         steps:
           - checkout: none
-          - script: echo "Hello"
+          - script: |
+              echo "projectID: $(resources.pipeline.gavanlamb-azure-pipeline-playground.projectID)"
+              echo "pipelineName: $(resources.pipeline.gavanlamb-azure-pipeline-playground.pipelineName)"
+              echo "pipelineID: $(resources.pipeline.gavanlamb-azure-pipeline-playground.pipelineID)"
+              echo "runName: $(resources.pipeline.gavanlamb-azure-pipeline-playground.runName)"
+              echo "runID: $(resources.pipeline.gavanlamb-azure-pipeline-playground.runID)"
+              echo "runURI: $(resources.pipeline.gavanlamb-azure-pipeline-playground.runURI)"
+              echo "sourceBranch: $(resources.pipeline.gavanlamb-azure-pipeline-playground.sourceBranch)"
+              echo "sourceCommit: $(resources.pipeline.gavanlamb-azure-pipeline-playground.sourceCommit)"
+              echo "sourceProvider: $(resources.pipeline.gavanlamb-azure-pipeline-playground.sourceProvider)"
+              echo "requestedFor: $(resources.pipeline.gavanlamb-azure-pipeline-playground.requestedFor)"
+              echo "requestedForID: $(resources.pipeline.gavanlamb-azure-pipeline-playground.requestedForID)"
             displayName: Test
